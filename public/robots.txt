@@ -1,4 +1,13 @@
 User-agent: *
+
+Disallow: /admin/
+Disallow: /assets/js/
+Disallow: /assets/css/
 Allow: /public/
 Allow: /views/
 Allow: /
+
+Allow: /sitemap.xml
+Sitemap: https://your-website.com/sitemap.xml
+
+Crawl-delay: 2
