@@ -1,0 +1,72 @@
+html {
+    font-family: sans-serif;
+}
+header {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    justify-items: center;
+}
+h1 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+form {
+    display: flex;
+    width: 15rem;
+}
+
+form input, form button {
+    padding: .5rem;
+    margin: .2rem;
+    margin-bottom: 2rem;
+    border: 1px solid #ccc;
+    border-radius: .5rem;
+    font-size: 17px;
+}
+form button {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+form #clear {
+    background-color: #f2f2f2;
+    color: black;
+}
+table {
+    width: 99vw;
+    border-collapse: collapse;
+}
+th, td {
+    text-align: left;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+th {
+    background-color: #f2f2f2;
+}
+#shitpostsbtn {
+    margin-top: 10rem;
+}
+#shitposts {
+    display: flex;
+    justify-self: center;
+    justify-content: space-between;
+}
+#shitposts.hidden {
+    display: none;
+}
+#shitposts img {
+    width: 32vw;
+    margin: 0 5px;
+}
+@media (max-width: 530px) {
+    form {
+        width: 96vw;
+        flex-direction: column;
+    }
+    form input, form button {
+        margin: .25rem;
+    }
+}

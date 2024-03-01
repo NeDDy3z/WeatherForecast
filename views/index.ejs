@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="/style.css"> </head>
+    <title>Weather</title>
+</head>
+<body>
+    <header>
+        <h1>Weather forecast</h1>
+        <a href="/"><img src="/images/mountain.jpg" alt="Mountain Climbing" height="60px" loading="lazy"></a>
+    </header>
+    <div>
+        <form action="/" method="get" onsubmit="saveInputs()">
+            <input type="number" name="latitude_input" id="latitude_input" placeholder="Latitude" step="0.000001" max="90" min="-90" required>
+            <input type="number" name="longitude_input" id="longitude_input" placeholder="Longitude" step="0.000001" max="180" min="-180" required>
+            <button type="submit">Search</button>
+            <button id="clear" onclick="clearInputs()" type="button">Clear</button>
+        </form>
+    </div>
+    <div id="table">
+        <% if (data) { %>
+        <table>
+            <thead>
+            <tr>
+                <th>Time</th>
+                <th>°C</th>
+                <th>Rain (mm)</th>
+                <th>Snow (cm)</th>
+                <th>Pressure (hPa)</th>
+            </tr>
+            </thead>
+            <tbody>
+                <% data.hourly.time.forEach((time, index) => { %>
+                    <tr>
+                        <td><%= new Date(time).getHours().toString().padStart(2, '0'); %>:<%= new Date(time).getMinutes().toString().padStart(2, '0'); %></td>
+                        <td><%= data.hourly.temperature_2m[index] %></td>
+                        <td><%= data.hourly.showers[index] %></td>
+                        <td><%= data.hourly.snowfall[index] %></td>
+                        <td><%= data.hourly.surface_pressure[index] %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+        <% } %>
+    </div>
+    <button id="shitpostsbtn" onclick="">Show/Hide Shitposts</button>
+    <div id="shitposts" class="hidden">
+        <img src="/images/mem1.webp" alt="Shitpost #1" loading="lazy">
+        <img src="/images/mem2.webp" alt="Shitpost #2" loading="lazy">
+        <img src="/images/mem3.webp" alt="Shitpost #3" loading="lazy">
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
