@@ -3,57 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
-    <meta name="description" content="Weather forecast for mountain climbers">
+    <meta name="description" content="Hike with confidence! Get your 24-hour mountain weather forecast tailored for climbers. Plan your ascent, descent, and campout with crucial details like wind speeds, precipitation chances, and temperature fluctuations. Stay informed and safe on your next mountain adventure.">
     <link rel="icon" type="image/x-icon" href="/images/icon.png">
     <link rel="stylesheet" href="/style.css">
-    <title>Weather forecast</title>
+    <title>Weather Forecast - 24 Hour Details</title>
 </head>
 <body>
     <header>
         <h1>Weather forecast</h1>
         <a href="/"><img src="/images/mountain.jpg" alt="Mountain Climbing" height="60px" loading="lazy"></a>
     </header>
-    <div>
-        <form action="/" method="get" onsubmit="saveInputs()">
-            <input type="number" name="latitude_input" id="latitude_input" placeholder="Latitude" step="0.000001" max="90" min="-90" required>
-            <input type="number" name="longitude_input" id="longitude_input" placeholder="Longitude" step="0.000001" max="180" min="-180" required>
-            <button type="submit">Search</button>
-            <button id="clear" onclick="clearInputs()" type="button">Clear</button>
-        </form>
-    </div>
-    <div id="table">
-        <% if (data) { %>
-        <table>
-            <thead>
-            <tr>
-                <th>Time</th>
-                <th>°C</th>
-                <th>Rain (mm)</th>
-                <th>Snow (cm)</th>
-                <th>Pressure (hPa)</th>
-            </tr>
-            </thead>
-            <tbody>
-                <% data.hourly.time.forEach((time, index) => { %>
-                    <tr>
-                        <td><%= new Date(time).getHours().toString().padStart(2, '0'); %>:<%= new Date(time).getMinutes().toString().padStart(2, '0'); %></td>
-                        <td><%= data.hourly.temperature_2m[index] %></td>
-                        <td><%= data.hourly.showers[index] %></td>
-                        <td><%= data.hourly.snowfall[index] %></td>
-                        <td><%= data.hourly.surface_pressure[index] %></td>
-                    </tr>
-                <% }); %>
-            </tbody>
-        </table>
-        <% } %>
-    </div>
+    <main>
+        <section>
+            <form action="/" method="get" onsubmit="saveInputs()">
+                <input type="number" name="latitude_input" id="latitude_input" placeholder="Latitude" step="0.000001" max="90" min="-90" required>
+                <input type="number" name="longitude_input" id="longitude_input" placeholder="Longitude" step="0.000001" max="180" min="-180" required>
+                <button type="submit">Search</button>
+                <button id="clear" onclick="clearInputs()" type="button">Clear</button>
+            </form>
+        </section>
+        <section>
+            <div id="table">
+                <% if (data) { %>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>°C</th>
+                            <th>Rain (mm)</th>
+                            <th>Snow (cm)</th>
+                            <th>Pressure (hPa)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% data.hourly.time.forEach((time, index) => { %>
+                            <tr>
+                                <td><%= new Date(time).getHours().toString().padStart(2, '0'); %>:<%= new Date(time).getMinutes().toString().padStart(2, '0'); %></td>
+                                <td><%= data.hourly.temperature_2m[index] %></td>
+                                <td><%= data.hourly.showers[index] %></td>
+                                <td><%= data.hourly.snowfall[index] %></td>
+                                <td><%= data.hourly.surface_pressure[index] %></td>
+                            </tr>
+                        <% }); %>
+                        </tbody>
+                    </table>
+                <% } %>
+            </div>
+        </section>
+    </main>
     <button id="shitpostsbtn" onclick="">Show/Hide Shitposts</button>
-    <p>Erik Vaněk - 2024</p>
     <div id="shitposts" class="hidden">
         <img src="/images/mem1.webp" alt="Shitpost #1" loading="lazy">
         <img src="/images/mem2.webp" alt="Shitpost #2" loading="lazy">
         <img src="/images/mem3.webp" alt="Shitpost #3" loading="lazy">
     </div>
+    <p style="display: none;">
+        Climbers, listen up! Today's forecast for the peaks is a mixed bag. Morning brings clear skies and crisp air, perfect for an early ascent. However, be prepared for wind gusts increasing through the afternoon, challenging your balance and visibility. Pack extra layers for temperatures dipping below freezing as the sun sets. By nightfall, expect potential snow flurries, making proper shelter and navigation crucial. Remember, weather in the mountains can change rapidly - check local updates before and during your climb, and prioritize safety above all else.
+        <a href="https://www.facebook.com/">Facebook</a>
+        <a href="https://twitter.com/">Twitter</a>
+        <a href="https://www.instagram.com/">Instagram</a>
+        <a href="https://www.youtube.com/">YouTube</a>
+        <a href="https://www.google.com/">Other Social Media</a>
+    </p>
+    <footer>
+        Erik Vaněk - 2024
+    </footer>
     <script src="script.js"></script>
 </body>
 </html>
