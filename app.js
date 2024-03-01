@@ -1,12 +1,14 @@
 const express = require('express');
 const axios = require('axios');
 const cache = require('node-cache');
+const compression = require('compression');
 
 const app = express();
 const myCache = new cache({ stdTTL: 3600 });
 
 // App settings
 app.use(express.static('public'));
+app.use(compression());
 app.set('view engine', 'ejs');
 
 // App GET request response
@@ -36,6 +38,22 @@ app.get('/', async (req, res) => {
         console.error(error);
         res.status(500).send('Error fetching data');
     }
+});
+
+app.get('/robots.txt', (req, res) => {
+    const allow = ['/public/']; // Define paths to allow (optional)
+
+    let robotsTxtContent = 'User-agent: *\n';
+
+    for (const path of disallow) {
+        robotsTxtContent += `Disallow: ${path}\n`;
+    }
+    for (const path of allow) {
+        robotsTxtContent += `Allow: ${path}\n`;
+    }
+
+    res.type('text/plain');
+    res.send(robotsTxtContent);
 });
 
 // Run server
