@@ -17,9 +17,9 @@ app.get('/', async (req, res) => {
     const longitude = req.query.longitude_input;
     const cacheKey = `${latitude}-${longitude}`;
 
+    // Check if longitude & latitude were set, then check if the data coresponding with said coordinates are saved in cache
+    // Saved in cache ? yes: load from cache, no: load from api and save to cache
     try {
-        // Check if longitude & latitude were set, then check if the data coresponding with said coordinates are saved in cache
-        // Saved in cache ? yes: load from cache, no: load from api and save to cache
         let response = null
         if (latitude && longitude) {
             if (!myCache.get(cacheKey)){
@@ -40,8 +40,9 @@ app.get('/', async (req, res) => {
     }
 });
 
+//robots.txt (?)
 app.get('/robots.txt', (req, res) => {
-    const allow = ['/public/']; // Define paths to allow (optional)
+    const allow = ['/public/'];
 
     let robotsTxtContent = 'User-agent: *\n';
 

@@ -1,26 +1,13 @@
-// Declaration
 const lat_input = document.getElementById('latitude_input');
 const lon_input = document.getElementById('longitude_input');
-
-// Images toggle
-const toggleButton = document.getElementById('shitpostsbtn');
-const shitpostsDiv = document.getElementById('shitposts');
-toggleButton.addEventListener('click', () => {
-    shitpostsDiv.classList.toggle('hidden');
-});
-
-// Clear inputs
 function clearInputs() {
     lat_input.value = null;
     lon_input.value = null;
 }
-
-// Save cookies
 function saveInputs() {
-    document.cookie = `latitude=${lat_input.value.toString()}`;
-    document.cookie = `longitude=${lon_input.value.toString()}`;
+    localStorage.setItem('latitude', lat_input.value.toString());
+    localStorage.setItem('longitude', lon_input.value.toString());
 }
-
 window.addEventListener('load', function() {
     const rows = document.querySelectorAll('tbody tr');
     if (rows.length > 0) {
@@ -38,45 +25,41 @@ window.addEventListener('load', function() {
             data.push(rowData);
         });
         const jsonData = JSON.stringify(data);
-        document.cookie = `tableData=${jsonData}; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
+        localStorage.setItem('tableData', jsonData);
+        // Set expiry in 24 hours
+        const expiryDate = new Date();
+        expiryDate.setDate(expiryDate.getDate() + 1);
+        const expiryTimestamp = expiryDate.getTime();
+        localStorage.setItem('tableDataExpiry', expiryTimestamp);
     }
 });
-
-
-//Load cookies
-const cookies = document.cookie.split('; ');
-lat_input.value = cookies.find(row => row.startsWith('latitude')).split('=')[1];
-lon_input.value = cookies.find(row => row.startsWith('longitude')).split('=')[1];
-
-if (!document.querySelector('table')) {
-    const tableCookieValue = document.cookie
-        .split('; ')
-        .find(row => row.startsWith('tableData='))
-        ?.split('=')[1];
-
-    const tableData = JSON.parse(tableCookieValue);
-    const newTbody = document.createElement('tbody');
-    tableData.forEach(rowData => {
-        const tr = document.createElement('tr');
-        Object.values(rowData).forEach(value => {
-            const td = document.createElement('td');
-            td.textContent = value;
-            tr.appendChild(td);
+const latitude = localStorage.getItem('latitude');
+const longitude = localStorage.getItem('longitude');
+if (latitude && longitude) {
+    lat_input.value = latitude;
+    lon_input.value = longitude;
+}
+const tableDataExpiry = localStorage.getItem('tableDataExpiry');
+if (tableDataExpiry && Date.now() < parseInt(tableDataExpiry, 10)) {
+    const tableData = localStorage.getItem('tableData');
+    if (tableData) {
+        const newTbody = document.createElement('tbody');
+        JSON.parse(tableData).forEach(rowData => {
+            const tr = document.createElement('tr');
+            Object.values(rowData).forEach(value => {
+                const td = document.createElement('td');
+                td.textContent = value;
+                tr.appendChild(td);
+            });
+            newTbody.appendChild(tr);
         });
-        newTbody.appendChild(tr);
-    });
 
-    document.getElementById("table").innerHTML =
-        "<table>\n" +
-        "            <thead>\n" +
-        "            <tr>\n" +
-        "                <th>Time</th>\n" +
-        "                <th>°C</th>\n" +
-        "                <th>Rain (mm)</th>\n" +
-        "                <th>Snow (cm)</th>\n" +
-        "                <th>Pressure (hPa)</th>\n" +
-        "            </tr>\n" +
-        "            </thead>";
-    document.getElementsByTagName("table")[0].appendChild(newTbody);
-    document.getElementById("table").innerHTML += "</table>";
+        const table = document.createElement('table');
+        const thead = document.createElement('thead');
+        thead.innerHTML = "<tr><th>Time</th><th>°C</th><th>Rain (mm)</th><th>Snow (cm)</th><th>Pressure (hPa)</th></tr>";
+        table.appendChild(thead);
+        table.appendChild(newTbody);
+        
+        document.getElementById('table').appendChild(table);
+    }
 }

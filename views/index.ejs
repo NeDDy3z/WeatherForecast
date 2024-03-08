@@ -1,75 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
-    <meta name="description" content="Get your 24-hour mountain weather forecast tailored for climbers. Plan your ascent, descent, and campout with crucial details like temperature, precipitation, and more.">    <link rel="icon" type="image/x-icon" href="/images/icon.png">
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width"><meta name="description" content="Get your 24-hour mountain weather forecast tailored for climbers. Plan your ascent, descent, and campout with crucial details like temperature, precipitation, and more.">    <link rel="icon" type="image/x-icon" href="/images/icon.png">
     <link rel="stylesheet" href="/style.css">
-    <title>Weather Forecast - 24 Hour Details</title>
+    <title>Weather forecast</title>
 </head>
 <body>
-    <header>
-        <h1>Weather Forecast - 24 Hour Details</h1>
-        <a href="/"><img src="/images/mountain.jpg" alt="Mountain Climbing" height="60px" loading="lazy"></a>    </header>
-    <main>
-        <section>
-            <form action="/" method="get" onsubmit="saveInputs()">
-                <input type="number" name="latitude_input" id="latitude_input" placeholder="Latitude" step="0.000001" max="90" min="-90" required>
-                <input type="number" name="longitude_input" id="longitude_input" placeholder="Longitude" step="0.000001" max="180" min="-180" required>
-                <button type="submit">Search</button>
-                <button id="clear" onclick="clearInputs()" type="button">Clear</button>
-            </form>
-        </section>
-        <section>
-            <div id="table">
-                <% if (data) { %>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Time</th>
-                            <th>°C</th>
-                            <th>Rain (mm)</th>
-                            <th>Snow (cm)</th>
-                            <th>Pressure (hPa)</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <% data.hourly.time.forEach((time, index) => { %>
-                            <tr>
-                                <td><%= new Date(time).getHours().toString().padStart(2, '0'); %>:<%= new Date(time).getMinutes().toString().padStart(2, '0'); %></td>
-                                <td><%= data.hourly.temperature_2m[index] %></td>
-                                <td><%= data.hourly.showers[index] %></td>
-                                <td><%= data.hourly.snowfall[index] %></td>
-                                <td><%= data.hourly.surface_pressure[index] %></td>
-                            </tr>
-                        <% }); %>
-                        </tbody>
-                    </table>
-                <% } %>
-            </div>
-        </section>
-    </main>
-    <button id="shitpostsbtn" onclick="">Show/Hide Shitposts</button>
-    <div id="shitposts" class="hidden">
-        <img src="/images/mem1.webp" alt="Shitpost #1" loading="lazy">
-        <img src="/images/mem2.webp" alt="Shitpost #2" loading="lazy">
-        <img src="/images/mem3.webp" alt="Shitpost #3" loading="lazy">
-    </div>
-    <div style="visibility: hidden;">
-        <p>
-            <a href="https://www.facebook.com/">Facebook</a>
-            <a href="https://twitter.com/">Twitter</a>
-            <a href="https://www.instagram.com/">Instagram</a>
-            <a href="https://www.youtube.com/">YouTube</a>
-            <a href="https://www.google.com/">Other Social Media</a>
-        </p>
-        <p style="color: white;">
-            Climbers, gather round and heed the call of the mountains! Today's forecast for the peaks presents a tapestry woven from sun, wind, and potential snow. As dawn cracks open the eastern sky, be greeted by clear skies and crisp air, an invitation to begin your ascent early. But remember, the mountains are notorious for their capricious nature. Be prepared for wind gusts that pick up strength throughout the afternoon, testing your balance and obscuring the path ahead. Pack extra layers, for as the sun dips below the horizon, temperatures plummet, venturing below freezing.
-        </p>
-        <p style="color: white;">
-            By nightfall, the peaks may be dusted with a light snow, making proper shelter and precise navigation paramount. Never forget, the weather in the mountains can shift with the swiftness of a mountain goat. Before you embark on your climb, consult the latest local weather updates, and during your journey, remain vigilant. Always prioritize your safety, for the mountains demand respect and deserve only the most prepared adventurers. Let their challenge forge your resilience, and may your summit be bathed in the golden light of success!
-        </p>
-    </div>
-    <script src="script.js"></script>
+    <header><h1>Weather Forecast</h1><a href="/"><img src="/images/mountain.jpg" alt="Mountain Climbing" height="60px" loading="lazy"></a>    </header>
+    <form action="/" method="get" onsubmit="saveInputs()"><input type="number" name="latitude_input" id="latitude_input" placeholder="Latitude" step="0.000001" max="90" min="-90" required><input type="number" name="longitude_input" id="longitude_input" placeholder="Longitude" step="0.000001" max="180" min="-180" required><button type="submit">Search</button><button id="clear" onclick="clearInputs()" type="button">Clear</button></form>
+    <div id="table"><% if (data) { %><table><thead><tr><th>Time</th><th>°C</th><th>Rain (mm)</th><th>Snow (cm)</th><th>Pressure (hPa)</th></tr></thead><tbody><% data.hourly.time.forEach((time, index) => { %><tr><td><%= new Date(time).getHours().toString().padStart(2, '0'); %>:<%= new Date(time).getMinutes().toString().padStart(2, '0'); %></td><td><%= data.hourly.temperature_2m[index] %></td><td><%= data.hourly.showers[index] %></td><td><%= data.hourly.snowfall[index] %></td><td><%= data.hourly.surface_pressure[index] %></td></tr><% }); %></tbody></table><% } %></div>
+    <img src="/images/mem1.webp" alt="Shitpost #1" loading="lazy"><img src="/images/mem2.webp" alt="Shitpost #2" loading="lazy"><img src="/images/mem3.webp" alt="Shitpost #3" loading="lazy"><script src="script.js"></script>
 </body>
 </html>
